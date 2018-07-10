@@ -28,8 +28,8 @@ if password:
 
 tn.write(b"configure terminal\n")
 
-#add loop to create vlan 2-9
-for n in range (2,10):
+#add loop to create vlan 2-10
+for n in range (2,11):
     tn.write(b"vlan " + str(n).encode('ascii') + b"\n")
     tn.write(b"name Python_VLAN_" + str(n).encode('ascii') + b"\n")
 
