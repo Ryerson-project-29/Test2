@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+
+{%block body%}
+
+<div class="content" style="width:400px;height:400px;background-color:#E0E0E0">
+    <h4 style="text-align:center;">{{the_title}}</h4>
+    <hr style="height:10px;border:none;border-top:5px ridge blue;" />
+    <br>
+ 
+    <h4>
+    <div class="page-header" style="margin-left:10%;margin-right:10%">
+        {% if the_results %}
+            Dear {{ userName }},<br>
+            Your password is valid
+        {% else %}
+            Your password "{{ password }}" is invalid,click<br>
+            <a href="/entry">here</a> to return to the previous page to try
+            again!<br>
+        {% endif %}
+    </div>
+    </h4>
+
+</div>
+
+{%endblock%}
