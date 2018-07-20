@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{%block body%}
+
+<div class="content" style="width:400px;height:400px;background-color:#E0E0E0;text-align:center"">
+    <h4 style="text-align:center;">{{the_title}}</h4>
+    <hr style="height:10px;border:none;border-top:5px ridge blue;" />
+    <br>
+    <center>
+    <p>Welcome to Ryerson University</p>
+    <p>2018 Case Study Project 29 VPN Simulation System</p>
+    <form method='POST' action='/result' >
+        <br>
+        <table >
+            <tr><td>UserName:</td><td><input name='userName' type='TEXT' width='60'></td></tr>
+            <tr><td>Password:</td><td><input name='password' type='password'</td></tr>
+             <tr></tr>
+            <tr><td><input value='Submit!' type='SUBMIT'><td></tr>
+        </table>   
+    </form>
+    </center> 
+</div>
+
+{%endblock%}
