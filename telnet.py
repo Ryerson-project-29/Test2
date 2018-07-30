@@ -9,7 +9,7 @@ class mytelnet():
 		self.Username = user
 		self.password = password
 		self.tn = telnetlib.Telnet(HOST)
-	def connection(self):
+	def login(self):
 		self.tn.read_until(b"Username: ")
 		print("Username username is: ",self.Username)
 		self.tn.write(self.Username.encode('ascii') + b"\n")
@@ -18,9 +18,32 @@ class mytelnet():
 			self.tn.write(self.password.encode('ascii') + b"\n")
 		a=self.tn.read_until(b"Username: ",timeout=0)		
 		if len(a)<=2:
-			print ("wrong user or password")
+			#print ("wrong user or password")
+			return False		
 		else:
 			print ("%s Login successfully!"%(self.Username))
+			return True
+	def show_uptime(self):
+		#self.tn.write(b"terminal length 0\n")
+		self.tn.write(b"show version | i uptime\n")
+		time.sleep(0.2)
+		a = self.tn.read_very_eager().decode('ascii')
+		print(a)
+		return a
+		#print(self.tn.read_very_eager().decode('ascii'))
+	def approval(self,v_user,v_passw):
+		self.tn.write(b"config t\n")
+		time.sleep(1)
+		temp="username %s privilege 15 password %s\n"%(v_user,v_passw)
+		btemp=bytes(temp, encoding='utf-8')
+		self.tn.write(btemp)
+		#self.tn.write(b"username %s privilege 15 password %s\n"%(v_user,v_passw))
+		self.tn.write(b"end\n")
+		self.tn.write(b"wr\n")
+		time.sleep(0.5)
+		self.tn.write(b"sh run | i user\n")
+		print(self.tn.read_very_eager().decode('ascii'))
+		return True
 	def show_version(self):
 		self.tn.write(b"terminal length 0\n")
 		self.tn.write(b"show version\n\n")
@@ -45,9 +68,11 @@ class mytelnet():
 	def telnet_port_on(self,port):
 		self.tn.write(b"terminal length 0\n")
 		self.tn.write(b"config t\n")
-		time.sleep(1)
+		time.sleep(0.2)
 		print(self.tn.read_very_eager().decode('ascii'))
-		self.tn.write(b"int %s\n"%(port))
+		temp="int %s\n"%(port)
+		btemp=bytes(temp, encoding='utf-8')
+		self.tn.write(btemp)
 		time.sleep(0.2)
 		print(self.tn.read_very_eager().decode('ascii'))
 		self.tn.write(b"no shutdown\n")
@@ -60,9 +85,12 @@ class mytelnet():
 	def telnet_port_down(self,port):
 		self.tn.write(b"terminal length 0\n")
 		self.tn.write(b"config t\n")
-		time.sleep(1)
+		time.sleep(0.2)
 		print(self.tn.read_very_eager().decode('ascii'))
-		self.tn.write(b"int %s\n"%(port))
+		temp="int %s\n"%(port)
+		btemp=bytes(temp, encoding='utf-8')
+		self.tn.write(btemp)
+		#self.tn.write(b"int %s\n"%(port))
 		time.sleep(0.2)
 		print(self.tn.read_very_eager().decode('ascii'))
 		self.tn.write(b"shutdown\n")
@@ -75,12 +103,18 @@ class mytelnet():
 	def telnet_set_ip(self,port,ip,mask):
 		self.tn.write(b"terminal length 0\n")
 		self.tn.write(b"config t\n")
-		time.sleep(1)
-		print(self.tn.read_very_eager().decode('ascii'))
-		self.tn.write(b"int %s\n"%(port))
 		time.sleep(0.2)
 		print(self.tn.read_very_eager().decode('ascii'))
-		self.tn.write(b"ip address %s %s\n"%(ip,mask))
+		temp="int %s\n"%(port)
+		btemp=bytes(temp, encoding='utf-8')
+		self.tn.write(btemp)
+		#self.tn.write(b"int %s\n"%(port))
+		time.sleep(0.2)
+		print(self.tn.read_very_eager().decode('ascii'))
+		temp1="ip address %s %s\n"%(ip,mask)
+		btemp1=bytes(temp1, encoding='utf-8')
+		self.tn.write(btemp1)
+		#self.tn.write(b"ip address %s %s\n"%(ip,mask))
 		time.sleep(0.2)
 
 		#tn.write(b"no shutdown\n")
@@ -89,17 +123,22 @@ class mytelnet():
 		self.tn.write(b"end\n")
 		time.sleep(0.2)
 		print(self.tn.read_very_eager().decode('ascii'))
+		
 	def close_telnet(self):
 		self.tn.close()
 if __name__ == '__main__':
 	test_telnet=mytelnet("10.10.10.3","admin","cisco1234")
-	test_telnet.connection()
+	test_telnet.login()
+	print ("********************************")
+	print ("show Uptime start:")
+	test_telnet.show_uptime()
+	test_telnet.approval("user8","cisco")
 	print ("********************************")
 	print ("show version start:")
-	test_telnet.show_version()
+	#test_telnet.show_version()
 	print ("********************************")
 	print ("show run start:")
-	test_telnet.show_run()
+	#test_telnet.show_run()
 	print ("********************************")
 	print ("show ip int b start:")
 	test_telnet.show_ip_int_b()
@@ -111,7 +150,7 @@ if __name__ == '__main__':
 	test_telnet.telnet_port_down("Ethernet0/1")
 	print ("********************************")
 	print ("set ip start:")
-	test_telnet.telnet_set_ip("Ethernet0/1","10.10.11.4","255.255.255.0")
+	#test_telnet.telnet_set_ip("Ethernet0/1","10.10.11.4","255.255.255.0")
 	print ("********************************")
 	print ("telnet  close start:")
 	test_telnet.close_telnet()

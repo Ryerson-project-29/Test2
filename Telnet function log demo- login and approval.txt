@@ -1,0 +1,77 @@
+ryerson@ubuntu:~/P29$ python3 telnet.py
+Username username is:  admin
+********************************
+show Uptime start:
+
+R1#show version | i uptime
+R1 uptime is 7 hours, 35 minutes
+R1#
+config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#username user8 privilege 15 password cisco
+R1(config)#end
+R1#wr
+Building configuration...
+[OK]
+R1#
+********************************
+show version start:
+********************************
+show run start:
+********************************
+show ip int b start:
+sh run | i user
+username python password 0 python 
+username admin privilege 15 password 0 cisco1234
+username ryerson privilege 5 password 0 ryerson
+username 1 privilege 15 password 0 1
+username user8 privilege 15 password 0 cisco
+R1#terminal length 0
+R1#
+********************************
+telnet port on start:
+show ip int b
+Interface                  IP-Address      OK? Method Status                Protocol
+Ethernet0/0                10.10.10.3      YES NVRAM  up                    up      
+Ethernet0/1                10.10.11.4      YES NVRAM  administratively down down    
+Ethernet0/2                unassigned      YES NVRAM  administratively down down    
+Ethernet0/3                unassigned      YES NVRAM  administratively down down    
+Ethernet1/0                unassigned      YES NVRAM  administratively down down    
+Ethernet1/1                unassigned      YES NVRAM  administratively down down    
+Ethernet1/2                unassigned      YES NVRAM  administratively down down    
+Ethernet1/3                unassigned      YES NVRAM  administratively down down    
+Serial2/0                  11.11.11.1      YES NVRAM  up                    up      
+Serial2/1                  unassigned      YES NVRAM  administratively down down    
+Serial2/2                  unassigned      YES NVRAM  administratively down down    
+Serial2/3                  unassigned      YES NVRAM  administratively down down    
+Serial3/0                  unassigned      YES NVRAM  administratively down down    
+Serial3/1                  unassigned      YES NVRAM  administratively down down    
+Serial3/2                  unassigned      YES NVRAM  administratively down down    
+Serial3/3                  unassigned      YES NVRAM  administratively down down    
+R1#
+R1#terminal length 0
+R1#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#
+int Ethernet0/1
+R1(config-if)#
+no shutdown
+R1(config-if)#
+end
+R1#
+********************************
+telnet port down start:
+terminal length 0
+R1#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#
+int Ethernet0/1
+R1(config-if)#
+shutdown
+R1(config-if)#
+end
+R1#
+********************************
+set ip start:
+********************************
+telnet  close start:
