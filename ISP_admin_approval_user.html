@@ -1,0 +1,40 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+	<meta charset="utf-8"> 
+	<title>Administrator control</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">  
+</head>
+<body bgcolor="#66CCCC">
+<div class="container">
+			<div class="span4">
+
+			<em>Client admin request!</em>
+
+			<h4><em>Add user request:</em> </h4>
+
+			<p id="demo"></p>
+			<script>
+            test_func = {{ clientlist|safe }}
+
+			    if (test_func.length == 0)
+	             {
+                   document.getElementById("demo").innerHTML = "No Pending Requests";
+                 }
+
+                else
+                 {
+                   text = "<ul>";
+                   for (i = 0; i < test_func.length; i++)
+                   {
+                   text += "<li><h4>" + test_func[i] + "     </h4><a href='/approve_user/" + test_func[i] + "'>Approve</a> or <a href='/reject_user/" + test_func[i] + "'>Reject</a></li>";
+                   }
+                   text += "</ul>";
+                   document.getElementById("demo").innerHTML = text;
+                 }
+             </script>
+		</div>
+</div>
+</body>
+</html>
+

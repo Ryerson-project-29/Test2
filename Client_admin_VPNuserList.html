@@ -1,0 +1,38 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+	<meta charset="utf-8"> 
+	<title>Client control</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">  
+</head>
+<body bgcolor="#66CCCC">
+<div class="container">
+			<div class="span4">
+
+			<h2><em>VPN user list for {{site}}</em> </h2>
+
+			<p id="demo"></p>
+			<script>
+            test_func = {{ clientlist|safe }}
+
+			    if (test_func.length == 0)
+	             {
+                   document.getElementById("demo").innerHTML = "No VPN Users";
+                 }
+
+                else
+                 {
+                   text = "<ul>";
+                   for (i = 0; i < test_func.length; i++)
+                   {
+                   text += "<li><h4>" + test_func[i] + "     </h4><a href='/reject_user/" + test_func[i] + "'>Remove User</a></li>";
+                   }
+                   text += "</ul>";
+                   document.getElementById("demo").innerHTML = text;
+                 }
+             </script>
+		</div>
+</div>
+</body>
+</html>
+
